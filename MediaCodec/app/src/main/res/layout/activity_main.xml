@@ -1,0 +1,43 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+    
+    <LinearLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <SurfaceView 
+	        android:id="@+id/surface_view"
+	        android:layout_width="240dp"
+	        android:layout_height="160dp"/>
+        <Button
+             android:id="@+id/switch_camera"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginLeft="20dp"
+             android:text="切换摄像头"/>
+    </LinearLayout>
+    
+    <ImageView 
+        android:id="@+id/img"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="#009988"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"/>
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_vertical">
+        <SurfaceView 
+	        android:id="@+id/surface_view1"
+	        android:layout_width="match_parent"
+	        android:layout_height="300dp"/>
+    </LinearLayout>
+
+</LinearLayout>
