@@ -14,7 +14,7 @@ import android.os.Build;
 import android.util.Log;
 
 /**
- * Description:
+ * Description:音频编码
  */
 public class AudioEncoder implements Runnable {
 

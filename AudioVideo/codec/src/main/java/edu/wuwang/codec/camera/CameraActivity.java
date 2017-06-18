@@ -23,6 +23,8 @@ import android.widget.Toast;
 
 import edu.wuwang.codec.R;
 import edu.wuwang.codec.coder.CameraRecorder;
+import edu.wuwang.codec.filter.Beauty;
+import edu.wuwang.codec.filter.WaterMarkFilter;
 import edu.wuwang.codec.utils.PermissionUtils;
 
 /**

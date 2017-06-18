@@ -28,7 +28,7 @@ import android.util.Log;
 import com.wuwang.jni.DataConvert;
 
 /**
- * Description:
+ * Description:相机录制（视频+音频编码）
  */
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
 public class CameraRecorder {

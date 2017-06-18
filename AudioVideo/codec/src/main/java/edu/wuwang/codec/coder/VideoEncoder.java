@@ -13,7 +13,7 @@ import android.os.Build;
 import android.util.Log;
 
 /**
- * Description:
+ * Description:视频编码
  */
 public class VideoEncoder implements Runnable {
 

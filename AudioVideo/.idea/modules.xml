@@ -4,8 +4,11 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AudioVideo.iml" filepath="$PROJECT_DIR$/AudioVideo.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://F:\Android_Live\MediaCodec8FFmpeg\AudioVideo\app\app.iml" filepath="F:\Android_Live\MediaCodec8FFmpeg\AudioVideo\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/codec/codec.iml" filepath="$PROJECT_DIR$/codec/codec.iml" />
+      <module fileurl="file://F:\Android_Live\MediaCodec8FFmpeg\AudioVideo\codec\codec.iml" filepath="F:\Android_Live\MediaCodec8FFmpeg\AudioVideo\codec\codec.iml" />
       <module fileurl="file://$PROJECT_DIR$/ffmpeg/ffmpeg.iml" filepath="$PROJECT_DIR$/ffmpeg/ffmpeg.iml" />
+      <module fileurl="file://F:\Android_Live\MediaCodec8FFmpeg\AudioVideo\ffmpeg\ffmpeg.iml" filepath="F:\Android_Live\MediaCodec8FFmpeg\AudioVideo\ffmpeg\ffmpeg.iml" />
     </modules>
   </component>
 </project>
