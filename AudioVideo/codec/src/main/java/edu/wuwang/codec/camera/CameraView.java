@@ -8,6 +8,7 @@ import android.content.Context;
 import android.graphics.Point;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import edu.wuwang.codec.filter.AFilter;
 
@@ -152,6 +153,7 @@ public class CameraView extends GLSurfaceView implements GLSurfaceView.Renderer 
     }
 
     public void takePhoto(){
+        Log.d("danxx", "takePhoto--->");
         mDrawer.setOneShotCallback(true);
     }
 

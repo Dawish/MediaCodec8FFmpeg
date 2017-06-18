@@ -241,6 +241,10 @@ public class CameraRecorder {
 //        nowTimeStep=timeStep;
     }
 
+    public byte[] getNowFeedData(){
+        return nowFeedData;
+    }
+
     private ByteBuffer getInputBuffer(MediaCodec codec,int index){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             return codec.getInputBuffer(index);

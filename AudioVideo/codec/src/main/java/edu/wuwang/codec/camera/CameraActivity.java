@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -24,7 +25,9 @@ import android.widget.Toast;
 import edu.wuwang.codec.R;
 import edu.wuwang.codec.coder.CameraRecorder;
 import edu.wuwang.codec.filter.Beauty;
+import edu.wuwang.codec.filter.GrayFilter;
 import edu.wuwang.codec.filter.WaterMarkFilter;
+import edu.wuwang.codec.utils.ImageUtil;
 import edu.wuwang.codec.utils.PermissionUtils;
 
 /**
@@ -40,8 +43,10 @@ public class CameraActivity extends AppCompatActivity implements FrameCallback {
     private long timeStep=50;
     private boolean recordFlag=false;
     private int type;       //1为拍照，0为录像
-
     private CameraRecorder mp4Recorder;
+
+    private int bmpWidth = 720,bmpHeight = 1280;
+    private boolean isTakePhoto = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,6 +67,7 @@ public class CameraActivity extends AppCompatActivity implements FrameCallback {
             mCapture.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
+                    isTakePhoto = false;
                     switch (event.getAction()){
                         case MotionEvent.ACTION_DOWN:
                             recordFlag=false;
@@ -71,15 +77,23 @@ public class CameraActivity extends AppCompatActivity implements FrameCallback {
                         case MotionEvent.ACTION_UP:
                             recordFlag=false;
                             if(System.currentTimeMillis()-time<500){
+                                isTakePhoto = true;
+                                Log.d("danxx", " isTakePhoto = true");
                                 mCapture.removeCallbacks(captureTouchRunnable);
                                 mCameraView.setFrameCallback(720,1280,CameraActivity.this);
                                 mCameraView.takePhoto();
+
                             }
                             break;
                     }
                     return false;
                 }
             });
+            //设置实时滤镜
+//            mCameraView.addFilter(new GrayFilter(getResources()), true);
+            WaterMarkFilter waterMarkFilter = new WaterMarkFilter(getResources());
+            waterMarkFilter.setWaterMark(ImageUtil.drawableToBitmap(getResources().getDrawable(R.mipmap.hot)));
+            mCameraView.addFilter(waterMarkFilter, true);
         }
     };
 
@@ -175,20 +189,56 @@ public class CameraActivity extends AppCompatActivity implements FrameCallback {
     }
 
     //图片保存
-    public void saveBitmap(Bitmap b){
-        long dataTake = System.currentTimeMillis();
-        final String jpegName=getPath("photo/", dataTake +".jpg");
-        try {
-            FileOutputStream fout = new FileOutputStream(jpegName);
-            BufferedOutputStream bos = new BufferedOutputStream(fout);
-            b.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-            bos.flush();
-            bos.close();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        recordComplete(type,jpegName);
+    public void saveBitmap(final Bitmap b){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                long dataTake = System.currentTimeMillis();
+                final String jpegName=getPath("photo/", dataTake +".jpg");
+                try {
+                    FileOutputStream fout = new FileOutputStream(jpegName);
+                    BufferedOutputStream bos = new BufferedOutputStream(fout);
+                    b.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                    bos.flush();
+                    bos.close();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                recordComplete(type,jpegName);
+            }
+        }).start();
+    }
+
+    /**
+     * 保存图片
+     * @param bytes RGBA数据
+     * @param width
+     * @param height
+     */
+    public void saveBitmap(final byte[] bytes,final int width,final int height){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                long dataTake = System.currentTimeMillis();
+                final String jpegName=getPath("photo/", dataTake +".jpg");
+                try {
+                    Bitmap bitmap=Bitmap.createBitmap(width,height, Bitmap.Config.ARGB_8888);
+                    ByteBuffer b=ByteBuffer.wrap(bytes);
+                    bitmap.copyPixelsFromBuffer(b);
+                    FileOutputStream fout = new FileOutputStream(jpegName);
+                    BufferedOutputStream bos = new BufferedOutputStream(fout);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                    bos.flush();
+                    bos.close();
+                    bitmap.recycle();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                recordComplete(type,jpegName);
+            }
+        }).start();
     }
 
     private void recordComplete(int type,final String path){
@@ -241,8 +291,20 @@ public class CameraActivity extends AppCompatActivity implements FrameCallback {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * 摄像头数据回调
+     * @param bytes RGBA数据
+     * @param time camera附带时间戳
+     */
     @Override
     public void onFrame(byte[] bytes, long time) {
-        mp4Recorder.feedData(bytes,time);
+        if(mp4Recorder!=null) {
+            mp4Recorder.feedData(bytes, time);
+            if (isTakePhoto){  //保存图片
+                Log.d("danxx", " isTakePhoto save");
+                isTakePhoto = false;
+                saveBitmap(bytes, bmpWidth, bmpHeight);
+            }
+        }
     }
 }
