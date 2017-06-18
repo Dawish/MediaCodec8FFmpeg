@@ -3,13 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/LiveTest.iml" filepath="$PROJECT_DIR$/LiveTest.iml" />
-      <module fileurl="file://F:\Android_Live\LiveTest\LiveTest.iml" filepath="F:\Android_Live\LiveTest\LiveTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://F:\Android_Live\LiveTest\app\app.iml" filepath="F:\Android_Live\LiveTest\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
-      <module fileurl="file://F:\Android_Live\LiveTest\library\library.iml" filepath="F:\Android_Live\LiveTest\library\library.iml" />
       <module fileurl="file://$PROJECT_DIR$/vitamio/vitamio.iml" filepath="$PROJECT_DIR$/vitamio/vitamio.iml" />
-      <module fileurl="file://F:\Android_Live\LiveTest\vitamio\vitamio.iml" filepath="F:\Android_Live\LiveTest\vitamio\vitamio.iml" />
     </modules>
   </component>
 </project>
